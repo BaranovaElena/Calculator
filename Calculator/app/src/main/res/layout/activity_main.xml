@@ -25,12 +25,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="7">
             <TextView
+                android:id="@+id/text_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="@dimen/padding_edit_text"
                 android:gravity="bottom|end"
                 android:layout_span="4"
-                android:text="111"
                 android:textAlignment="gravity"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_edit_text" />

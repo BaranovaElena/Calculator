@@ -19,6 +19,6 @@
     <string name="button_plus">+</string>
     <string name="button_pi">pi</string>
     <string name="button_0">0</string>
-    <string name="button_dot">,</string>
+    <string name="button_dot">.</string>
     <string name="button_result">=</string>
 </resources>
