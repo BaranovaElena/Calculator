@@ -6,16 +6,20 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private final Double PI = 3.1415;
+
+    private Calculator calculator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        calculator = new Calculator();
         setButtonsListeners();
     }
 
@@ -72,15 +76,16 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.button_undo).setOnClickListener(v -> clearLastSymbol());
 
-        findViewById(R.id.button_percent).setOnClickListener(v -> getPercentFromLastNumber());
+        findViewById(R.id.button_percent).setOnClickListener(v -> showPercentFromLastNumber());
 
-        findViewById(R.id.button_result).setOnClickListener(v -> getResult());
+        findViewById(R.id.button_result).setOnClickListener(v -> showResult());
     }
 
-    private void getResult() {
+    private void showResult() {
     }
 
-    private void getPercentFromLastNumber() {
+    private void showPercentFromLastNumber() {
+
     }
 
     private void clearLastSymbol() {
@@ -90,23 +95,32 @@ public class MainActivity extends AppCompatActivity {
             string.deleteCharAt(string.length()-1);
         }
         textView.setText(string.toString());
+        calculator.setTextField(string);
     }
 
     private void clearEditText() {
         TextView textView = findViewById(R.id.text_view);
         textView.setText("");
+        calculator.setTextField(new StringBuilder());
     }
 
     @SuppressLint("SetTextI18n")
     private void showSymbol(Button button) {
         TextView textView = findViewById(R.id.text_view);
         textView.setText(textView.getText()+button.getText().toString());
+        calculator.setTextField(new StringBuilder(textView.getText()));
     }
     @SuppressLint("SetTextI18n")
     private void showNumber(Double digit) {
         TextView textView = findViewById(R.id.text_view);
-        //todo если до этого ввели число, выводить ошибку
-        textView.setText(textView.getText()+digit.toString());
+
+        if (calculator.isLastSymbolDigit()) {
+            Toast.makeText(getApplicationContext(), R.string.error, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            textView.setText(textView.getText() + digit.toString());
+            calculator.setTextField(new StringBuilder(textView.getText()));
+        }
     }
 
 }

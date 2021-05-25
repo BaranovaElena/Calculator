@@ -21,4 +21,6 @@
     <string name="button_0">0</string>
     <string name="button_dot">.</string>
     <string name="button_result">=</string>
+
+    <string name="error">Ошибка</string>
 </resources>
