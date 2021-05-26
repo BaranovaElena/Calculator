@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        calculator = new Calculator();
+        calculator = new Calculator(getApplicationContext());
         setButtonsListeners();
     }
 
@@ -54,23 +54,22 @@ public class MainActivity extends AppCompatActivity {
         Button button9 = findViewById(R.id.button_9);
         button9.setOnClickListener(v -> showSymbol(button9));
 
-        Button buttonPi = findViewById(R.id.button_pi);
-        buttonPi.setOnClickListener(v -> showNumber(PI));
+        findViewById(R.id.button_pi).setOnClickListener(v -> showNumber(PI));
 
         Button buttonDot = findViewById(R.id.button_dot);
         buttonDot.setOnClickListener(v -> showSymbol(buttonDot));
 
         Button buttonPlus = findViewById(R.id.button_plus);
-        buttonPlus.setOnClickListener(v -> showSymbol(buttonPlus));
+        buttonPlus.setOnClickListener(v -> enterSign(buttonPlus));
 
         Button buttonMinus = findViewById(R.id.button_minus);
-        buttonMinus.setOnClickListener(v -> showSymbol(buttonMinus));
+        buttonMinus.setOnClickListener(v -> enterSign(buttonMinus));
 
         Button buttonMultiply = findViewById(R.id.button_multiply);
-        buttonMultiply.setOnClickListener(v -> showSymbol(buttonMultiply));
+        buttonMultiply.setOnClickListener(v -> enterSign(buttonMultiply));
 
         Button buttonDivide = findViewById(R.id.button_divide);
-        buttonDivide.setOnClickListener(v -> showSymbol(buttonDivide));
+        buttonDivide.setOnClickListener(v -> enterSign(buttonDivide));
 
         findViewById(R.id.button_clear).setOnClickListener(v -> clearEditText());
 
@@ -81,11 +80,22 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_result).setOnClickListener(v -> showResult());
     }
 
+    private void enterSign(Button button) {
+        if (calculator.isLastSymbolSign()) {
+            clearLastSymbol();
+        }
+        showSymbol(button);
+    }
+
     private void showResult() {
+        showSymbol(findViewById(R.id.button_result));
     }
 
     private void showPercentFromLastNumber() {
+        calculator.getPercentFromLastNumber();
 
+        TextView textView = findViewById(R.id.text_view);
+        textView.setText(calculator.getTextField());
     }
 
     private void clearLastSymbol() {
@@ -114,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
     private void showNumber(Double digit) {
         TextView textView = findViewById(R.id.text_view);
 
-        if (calculator.isLastSymbolDigit()) {
-            Toast.makeText(getApplicationContext(), R.string.error, Toast.LENGTH_SHORT).show();
+        if (calculator.isLastSymbolNumber()) {
+            Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
         }
         else {
             textView.setText(textView.getText() + digit.toString());
