@@ -1,5 +1,6 @@
 package com.example.calculator;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private final Double PI = 3.1415;
+    public final String CALC_KEY = "calculator_key";
 
     private Calculator calculator;
 
@@ -18,8 +20,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        calculator = new Calculator(getApplicationContext());
+        if (savedInstanceState != null && savedInstanceState.containsKey(CALC_KEY)) {
+            calculator = savedInstanceState.getParcelable(CALC_KEY);
+            updateState();
+        }
+        else {
+            calculator = new Calculator(getApplicationContext());
+        }
         setButtonsListeners();
+    }
+
+    private void updateState() {
+        TextView textView = findViewById(R.id.text_view);
+        textView.setText(calculator.getTextField());
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelable(CALC_KEY, calculator);
+        super.onSaveInstanceState(outState);
     }
 
     private void setButtonsListeners() {
