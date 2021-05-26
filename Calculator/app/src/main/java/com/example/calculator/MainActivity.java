@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_pi).setOnClickListener(v -> showNumber(PI));
 
         Button buttonDot = findViewById(R.id.button_dot);
-        buttonDot.setOnClickListener(v -> showSymbol(buttonDot));
+        buttonDot.setOnClickListener(v -> showDot(buttonDot));
 
         Button buttonPlus = findViewById(R.id.button_plus);
         buttonPlus.setOnClickListener(v -> enterSign(buttonPlus));
@@ -77,6 +77,12 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_percent).setOnClickListener(v -> showPercentFromLastNumber());
 
         findViewById(R.id.button_result).setOnClickListener(v -> showResult());
+    }
+
+    private void showDot(Button button) {
+        if (!calculator.isLastNumberDotted()) {
+            showSymbol(button);
+        }
     }
 
     private void enterSign(Button button) {

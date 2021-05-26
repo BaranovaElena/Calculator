@@ -259,4 +259,9 @@ public class Calculator  implements Parcelable {
 
         return lastSymbol.toString().equals(context.getString(R.string.result));
     }
+
+    public boolean isLastNumberDotted() {
+        String lastNumberStr = getLastNumber();
+        return lastNumberStr.contains(context.getString(R.string.dot));
+    }
 }
