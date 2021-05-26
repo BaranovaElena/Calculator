@@ -1,22 +1,20 @@
 package com.example.calculator;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.ParseException;
 
 enum Sign {
-    plus,
-    minus,
-    multiply,
-    divide
+    PLUS,
+    MINUS,
+    MULTIPLY,
+    DIVIDE
 }
 
 public class Calculator  implements Parcelable {
+    private final int ROUND_NUM = 3;
     private Context context;
     private StringBuilder textField;
     private Double number1;
@@ -82,7 +80,6 @@ public class Calculator  implements Parcelable {
     }
 
     public boolean isLastSymbolSign() {
-        System.out.println(context.getString(R.string.divide));
         StringBuilder lastSymbol = new StringBuilder();
         if (textField.length() > 0) {
             lastSymbol.append(textField.substring(textField.length() - 1));
@@ -98,7 +95,6 @@ public class Calculator  implements Parcelable {
                 || s.equals(context.getString(R.string.divide)));
     }
 
-    @SuppressLint("DefaultLocale")
     public void getPercentFromLastNumber() {
         String lastNumberStr = getLastNumber();
         if (!lastNumberStr.isEmpty()) {
@@ -106,7 +102,7 @@ public class Calculator  implements Parcelable {
                 double lastNumber = Double.parseDouble(lastNumberStr);
 
                 textField.delete(textField.length()-lastNumberStr.length(), textField.length());
-                textField.append(round(lastNumber/100d, 3));
+                textField.append(round(lastNumber/100d));
             }
             catch (NumberFormatException | StringIndexOutOfBoundsException e) {
                 e.printStackTrace();
@@ -114,11 +110,11 @@ public class Calculator  implements Parcelable {
         }
     }
 
-    private double round(double value, int num) {
+    private double round(double value) {
 //        BigDecimal a = new BigDecimal(value);
 //        BigDecimal roundOff = a.setScale(scale, BigDecimal.ROUND_HALF_EVEN);
 //        return roundOff.doubleValue();
-        double scale = Math.pow(10, num);
+        double scale = Math.pow(10, ROUND_NUM);
         return result = Math.ceil(value * scale) / scale;
     }
 
@@ -142,7 +138,125 @@ public class Calculator  implements Parcelable {
                 pos++;
             }
         }
-
         return textField.substring(pos);
+    }
+
+    public Double getResult() throws ArithmeticException {
+        boolean number1Exists = false;
+        boolean resultExists = false;
+        int pos = 0;
+        StringBuilder buf = new StringBuilder();
+
+        while (!resultExists) {
+            char s = textField.charAt(pos);
+            //текущий символ - число или точка
+            if (isDigit(String.valueOf(s))
+                    || String.valueOf(s).equals(context.getString(R.string.dot))) {
+                buf.append(s);
+                pos++;
+            }
+            //текущий символ - знак операции
+            else if (isSign(String.valueOf(s))) {
+                //запоминаем 1-й операнд
+                if (!number1Exists) {
+                    if (buf.length() == 0) {
+                        number1 = 0d;
+                    }
+                    else {
+                        number1 = Double.parseDouble(buf.toString());
+                    }
+                    number1Exists = true;
+                }
+                //пишем промежуточный результат в 1-й операнд
+                else {
+                    if (buf.length() == 0) {
+                        number2 = 0d;
+                    }
+                    else {
+                        number2 = Double.parseDouble(buf.toString());
+                    }
+                    number1 = count();
+                    number2 = 0d;
+                }
+                buf = new StringBuilder();
+                rememberSign(s);
+                pos++;
+            }
+            //текущий символ =
+            else if (String.valueOf(s).equals(context.getString(R.string.result))) {
+                //если не было  1-го операнда, результат - 1-й операнд
+                if (!number1Exists) {
+                    if (buf.length() == 0) {
+                        result = 0d;
+                    }
+                    else {
+                        result = Double.parseDouble(buf.toString());
+                    }
+                }
+                //считаем результат
+                else {
+                    //если нет 2-го операнда, результат - 1-й операнд
+                    if (buf.length() == 0) {
+                        result = number1;
+                    }
+                    else {
+                        number2 = Double.parseDouble(buf.toString());
+                        result = count();
+                    }
+                }
+                resultExists = true;
+                buf = new StringBuilder();
+                number1 = 0d;
+                number2 = 0d;
+            }
+        }
+        return result;
+    }
+
+    private void rememberSign(char s) {
+        if (String.valueOf(s).equals(context.getString(R.string.plus))) {
+            operation = Sign.PLUS;
+        }
+        else if (String.valueOf(s).equals(context.getString(R.string.minus))) {
+            operation = Sign.MINUS;
+        }
+        else if (String.valueOf(s).equals(context.getString(R.string.multiply))) {
+            operation = Sign.MULTIPLY;
+        }
+        else if (String.valueOf(s).equals(context.getString(R.string.divide))) {
+            operation = Sign.DIVIDE;
+        }
+    }
+
+    private Double count() throws ArithmeticException {
+        switch (operation) {
+            case PLUS:
+                result = round(number1+number2);
+                break;
+            case MINUS:
+                result = round(number1-number2);
+                break;
+            case MULTIPLY:
+                result = round(number1*number2);
+                break;
+            case DIVIDE:
+                if (Math.abs(number2 - 0) < 0.0001) {
+                    throw new ArithmeticException();
+                }
+                else {
+                    result = round(number1/number2);
+                }
+                break;
+        }
+        return result;
+    }
+
+    public boolean isLastSymbolEqualSign() {
+        StringBuilder lastSymbol = new StringBuilder();
+        if (textField.length() > 0) {
+            lastSymbol.append(textField.substring(textField.length() - 1));
+        }
+
+        return lastSymbol.toString().equals(context.getString(R.string.result));
     }
 }

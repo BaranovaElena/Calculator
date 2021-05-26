@@ -2,7 +2,6 @@ package com.example.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -88,7 +87,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showResult() {
-        showSymbol(findViewById(R.id.button_result));
+        TextView textView = findViewById(R.id.text_view);
+        if (!textView.getText().equals("")) {
+            if (!calculator.isLastSymbolEqualSign()) {
+                showSymbol(findViewById(R.id.button_result));
+            }
+            try {
+                Double result = calculator.getResult();
+                textView.setText(String.format("%s%s", textView.getText(), result.toString()));
+                calculator.setTextField(new StringBuilder(textView.getText()));
+            }
+            catch (ArithmeticException e) {
+                Toast.makeText(getApplicationContext(), getString(R.string.divisionByZero), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void showPercentFromLastNumber() {
@@ -114,13 +126,11 @@ public class MainActivity extends AppCompatActivity {
         calculator.setTextField(new StringBuilder());
     }
 
-    @SuppressLint("SetTextI18n")
     private void showSymbol(Button button) {
         TextView textView = findViewById(R.id.text_view);
-        textView.setText(textView.getText()+button.getText().toString());
+        textView.setText(String.format("%s%s", textView.getText(), button.getText().toString()));
         calculator.setTextField(new StringBuilder(textView.getText()));
     }
-    @SuppressLint("SetTextI18n")
     private void showNumber(Double digit) {
         TextView textView = findViewById(R.id.text_view);
 
@@ -128,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
         }
         else {
-            textView.setText(textView.getText() + digit.toString());
+            textView.setText(String.format("%s%s", textView.getText(), digit.toString()));
             calculator.setTextField(new StringBuilder(textView.getText()));
         }
     }
