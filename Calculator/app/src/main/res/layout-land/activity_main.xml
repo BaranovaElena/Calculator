@@ -21,14 +21,7 @@
 
         <TextView
             android:id="@+id/text_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/padding_edit_text"
-            android:gravity="top|end"
-            android:textAlignment="gravity"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_edit_text"
-            android:layout_weight="@integer/text_view_weight_land"/>
+            style="@style/style_text_view_land"/>
 
         <TableLayout
             android:layout_width="match_parent"

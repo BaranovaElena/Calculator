@@ -24,14 +24,7 @@
             style="@style/style_table_row_text_view_port">
             <TextView
                 android:id="@+id/text_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/padding_edit_text"
-                android:gravity="bottom|end"
-                android:layout_span="@integer/columns_num"
-                android:textAlignment="gravity"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_edit_text" />
+                style="@style/style_text_view_port"/>
         </TableRow>
 
         <TableRow
