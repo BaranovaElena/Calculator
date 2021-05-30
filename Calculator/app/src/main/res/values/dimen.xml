@@ -2,6 +2,13 @@
 <resources>
     <dimen name="text_size_button">25sp</dimen>
     <dimen name="text_size_edit_text">40sp</dimen>
-    <dimen name="margin_button">10dp</dimen>
+    <dimen name="margin_button">5dp</dimen>
     <dimen name="padding_edit_text">5dp</dimen>
+    <dimen name="stroke_width">4dp</dimen>
+    <dimen name="corner_radius">37dp</dimen>
+    <integer name="columns_num">4</integer>
+    <integer name="text_view_weight_port">7</integer>
+    <integer name="text_view_weight_land">5</integer>
+    <integer name="table_rows_weight">1</integer>
+    <integer name="table_weight_land">3</integer>
 </resources>
