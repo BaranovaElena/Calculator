@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Калькулятор</string>
+    <string name="error">Ошибка</string>
+    <string name="divisionByZero">Ошибка деления на 0</string>
+</resources>
