@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,10 +8,8 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srcCompat="@drawable/background_clouds"
-        android:scaleType="centerCrop" />
+        style="@style/background_image"
+        tools:ignore="MissingConstraints" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -124,9 +121,7 @@
         </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="@integer/table_rows_weight">
+            style="@style/style_table_row_calculator">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_pi"
@@ -147,6 +142,16 @@
                 android:id="@+id/button_result"
                 style="@style/style_button_action"
                 android:text="@string/result" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatToggleButton
+                android:id="@+id/toggle_theme"
+                style="@style/toggle_night_day_port">
+
+            </androidx.appcompat.widget.AppCompatToggleButton>
         </TableRow>
 
     </TableLayout>

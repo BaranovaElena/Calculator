@@ -11,4 +11,5 @@
     <integer name="text_view_weight_land">5</integer>
     <integer name="table_rows_weight">1</integer>
     <integer name="table_weight_land">3</integer>
+    <integer name="text_toggle_weight_land">1</integer>
 </resources>
