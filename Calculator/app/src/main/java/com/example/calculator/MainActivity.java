@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             calculator = new Calculator(getApplicationContext());
         }
         setButtonsListeners();
-        setToggleTheme();
+        //setToggleTheme();
     }
 
     private void updateState() {

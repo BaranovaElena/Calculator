@@ -26,10 +26,10 @@
                 android:id="@+id/text_view"
                 style="@style/style_text_view_land" />
 
-            <androidx.appcompat.widget.AppCompatToggleButton
-                android:id="@+id/toggle_theme"
-                style="@style/toggle_night_day_land">
-            </androidx.appcompat.widget.AppCompatToggleButton>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_settings"
+                style="@style/style_button_settings_land">
+            </com.google.android.material.button.MaterialButton>
         </LinearLayout>
 
         <TableLayout

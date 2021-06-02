@@ -27,4 +27,5 @@
     <string name="divisionByZero">Error: Division by 0</string>
     <string name="toggle_day">Turn on dark theme</string>
     <string name="toggle_night">Turn on light theme</string>
+    <string name="settings">Settings</string>
 </resources>

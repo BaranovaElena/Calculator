@@ -147,11 +147,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatToggleButton
-                android:id="@+id/toggle_theme"
-                style="@style/toggle_night_day_port">
-
-            </androidx.appcompat.widget.AppCompatToggleButton>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_settings"
+                style="@style/style_button_settings_port">
+            </com.google.android.material.button.MaterialButton>
         </TableRow>
 
     </TableLayout>
