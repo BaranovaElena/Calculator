@@ -15,4 +15,8 @@
         style="@style/toggle_night_day_port">
     </androidx.appcompat.widget.AppCompatToggleButton>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_close_settings"
+        style="@style/style_button_close_settings" />
+
 </FrameLayout>

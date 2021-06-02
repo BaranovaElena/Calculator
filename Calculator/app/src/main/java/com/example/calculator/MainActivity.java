@@ -3,21 +3,23 @@ package com.example.calculator;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.AppCompatToggleButton;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements Constants{
     private final Double PI = 3.1415;
     public final String CALC_KEY = "calculator_key";
-    public final String TOGGLE_THEME_KEY = "toggle_theme";
+    private final String SHARED_PREF_KEY = "main_activity";
+    private final String TOGGLE_THEME_KEY = "toggle_theme";
+    private final int SETTINGS_REQUEST_CODE = 111;
 
     private Calculator calculator;
+    private boolean nightTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,48 @@ public class MainActivity extends AppCompatActivity {
             calculator = new Calculator(getApplicationContext());
         }
         setButtonsListeners();
-        //setToggleTheme();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //ставим сохраненную тему
+        SharedPreferences sharedPref = getSharedPreferences(SHARED_PREF_KEY, MODE_PRIVATE);
+        nightTheme = sharedPref.getBoolean(TOGGLE_THEME_KEY, false);
+        if (nightTheme) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != SETTINGS_REQUEST_CODE || data == null) {
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+        if (resultCode == RESULT_OK){
+            //обрабатываем полученную от настроек тему
+            nightTheme = data.getBooleanExtra(NEW_THEME,false);
+            setAndSaveTheme();
+        }
+    }
+
+    private void setAndSaveTheme() {
+        if (nightTheme) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        SharedPreferences sharedPref = getSharedPreferences(SHARED_PREF_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(TOGGLE_THEME_KEY, nightTheme);
+        editor.apply();
     }
 
     private void updateState() {
@@ -101,6 +144,13 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_percent).setOnClickListener(v -> showPercentFromLastNumber());
 
         findViewById(R.id.button_result).setOnClickListener(v -> showResult());
+
+        findViewById(R.id.button_settings).setOnClickListener(v -> {
+            //открываем окно настроек, передавая текущаю тему
+            Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
+            settings.putExtra(THEME_KEY, nightTheme);
+            startActivityForResult(settings, SETTINGS_REQUEST_CODE);
+        });
     }
 
     private void showDot(Button button) {
@@ -171,32 +221,6 @@ public class MainActivity extends AppCompatActivity {
             textView.setText(String.format("%s%s", textView.getText(), digit.toString()));
             calculator.setTextField(new StringBuilder(textView.getText()));
         }
-    }
-
-    private void setToggleTheme() {
-        AppCompatToggleButton toggleTheme = findViewById(R.id.toggle_theme);
-
-        toggleTheme.setOnCheckedChangeListener((buttonView, isChecked) -> setThemeByToggleState(isChecked));
-
-        //ставим сохраненную тему
-        SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-        boolean toggle_default = sharedPref.getBoolean(TOGGLE_THEME_KEY, false);
-        toggleTheme.setChecked(toggle_default);
-        setThemeByToggleState(toggle_default);
-    }
-
-    private void setThemeByToggleState(boolean toggle_state) {
-        if (toggle_state) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-        //сохраняем состояние переключателя темы
-        SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(TOGGLE_THEME_KEY, toggle_state);
-        editor.apply();
     }
 
 }
