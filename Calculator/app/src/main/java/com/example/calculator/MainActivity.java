@@ -14,11 +14,14 @@ public class MainActivity extends AppCompatActivity {
     public final String CALC_KEY = "calculator_key";
 
     private Calculator calculator;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        textView = findViewById(R.id.text_view);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(CALC_KEY)) {
             calculator = savedInstanceState.getParcelable(CALC_KEY);
@@ -31,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateState() {
-        TextView textView = findViewById(R.id.text_view);
         textView.setText(calculator.getTextField());
     }
 
@@ -112,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showResult() {
-        TextView textView = findViewById(R.id.text_view);
         if (!textView.getText().equals("")) {
             if (!calculator.isLastSymbolEqualSign()) {
                 showSymbol(findViewById(R.id.button_result));
@@ -131,34 +132,28 @@ public class MainActivity extends AppCompatActivity {
     private void showPercentFromLastNumber() {
         calculator.getPercentFromLastNumber();
 
-        TextView textView = findViewById(R.id.text_view);
         textView.setText(calculator.getTextField());
     }
 
     private void clearLastSymbol() {
-        TextView textView = findViewById(R.id.text_view);
-        StringBuilder string = new StringBuilder(textView.getText());
+        String string = textView.getText().toString();
         if (string.length() > 0) {
-            string.deleteCharAt(string.length()-1);
+            string = string.substring(0,string.length()-1);
         }
-        textView.setText(string.toString());
-        calculator.setTextField(string);
+        textView.setText(string);
+        calculator.setTextField(new StringBuilder(string));
     }
 
     private void clearEditText() {
-        TextView textView = findViewById(R.id.text_view);
         textView.setText("");
         calculator.setTextField(new StringBuilder());
     }
 
     private void showSymbol(Button button) {
-        TextView textView = findViewById(R.id.text_view);
         textView.setText(String.format("%s%s", textView.getText(), button.getText().toString()));
         calculator.setTextField(new StringBuilder(textView.getText()));
     }
     private void showNumber(Double digit) {
-        TextView textView = findViewById(R.id.text_view);
-
         if (calculator.isLastSymbolNumber()) {
             Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
         }

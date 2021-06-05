@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.math.BigDecimal;
-
 enum Sign {
     PLUS,
     MINUS,
@@ -22,8 +20,6 @@ public class Calculator  implements Parcelable {
     private Sign operation;
     private Double result;
 
-    protected Calculator(Parcel in) {
-    }
 
     Calculator(Context context) {
         textField = new StringBuilder();
@@ -31,6 +27,30 @@ public class Calculator  implements Parcelable {
         number2 = 0d;
         result = 0d;
         this.context = context;
+    }
+
+
+    protected Calculator(Parcel in) {
+        if (in.readByte() == 0) {
+            textField = new StringBuilder();
+        } else {
+            textField = new StringBuilder(in.readString());
+        }
+        if (in.readByte() == 0) {
+            number1 = null;
+        } else {
+            number1 = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            number2 = null;
+        } else {
+            number2 = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            result = null;
+        } else {
+            result = in.readDouble();
+        }
     }
 
     public static final Creator<Calculator> CREATOR = new Creator<Calculator>() {
@@ -52,7 +72,12 @@ public class Calculator  implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(textField.toString());
+        dest.writeDouble(number1);
+        dest.writeDouble(number2);
+        dest.writeDouble(result);
     }
+
 
     public void setTextField(StringBuilder textField) {
         this.textField = textField;
@@ -63,29 +88,32 @@ public class Calculator  implements Parcelable {
     }
 
     public boolean isLastSymbolNumber() {
-        StringBuilder lastSymbol = new StringBuilder();
+        String lastSymbol = "";
         if (textField.length() > 0) {
-            lastSymbol.append(textField.substring(textField.length() - 1));
+            lastSymbol = textField.substring(textField.length() - 1);
         }
-        return (isDigit(lastSymbol.toString())
-                || lastSymbol.toString().equals(context.getString(R.string.dot)));
+        return (isNumber(lastSymbol)
+                || lastSymbol.equals(context.getString(R.string.dot)));
     }
 
-    public boolean isDigit(String s) {
-        return (s.equals(context.getString(R.string._0)) || s.equals(context.getString(R.string._1))
-             || s.equals(context.getString(R.string._2)) || s.equals(context.getString(R.string._3))
-             || s.equals(context.getString(R.string._4)) || s.equals(context.getString(R.string._5))
-             || s.equals(context.getString(R.string._6)) || s.equals(context.getString(R.string._7))
-             || s.equals(context.getString(R.string._8)) || s.equals(context.getString(R.string._9)));
+    public boolean isNumber(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+
     }
 
     public boolean isLastSymbolSign() {
-        StringBuilder lastSymbol = new StringBuilder();
+        String lastSymbol = "";
         if (textField.length() > 0) {
-            lastSymbol.append(textField.substring(textField.length() - 1));
+            lastSymbol = textField.substring(textField.length() - 1);
         }
 
-        return isSign(lastSymbol.toString());
+        return isSign(lastSymbol);
     }
 
     private boolean isSign(String s) {
@@ -124,7 +152,7 @@ public class Calculator  implements Parcelable {
 
         while (!endNumber) {
             char lastSymbol = textField.charAt(pos);
-            if (isDigit(String.valueOf(lastSymbol))
+            if (isNumber(String.valueOf(lastSymbol))
                     || String.valueOf(lastSymbol).equals(context.getString(R.string.dot))) {
                 if (pos>0) {
                     pos--;
@@ -150,7 +178,7 @@ public class Calculator  implements Parcelable {
         while (!resultExists) {
             char s = textField.charAt(pos);
             //текущий символ - число или точка
-            if (isDigit(String.valueOf(s))
+            if (isNumber(String.valueOf(s))
                     || String.valueOf(s).equals(context.getString(R.string.dot))) {
                 buf.append(s);
                 pos++;
@@ -252,12 +280,12 @@ public class Calculator  implements Parcelable {
     }
 
     public boolean isLastSymbolEqualSign() {
-        StringBuilder lastSymbol = new StringBuilder();
+        String lastSymbol = "";
         if (textField.length() > 0) {
-            lastSymbol.append(textField.substring(textField.length() - 1));
+            lastSymbol = textField.substring(textField.length() - 1);
         }
 
-        return lastSymbol.toString().equals(context.getString(R.string.result));
+        return lastSymbol.equals(context.getString(R.string.result));
     }
 
     public boolean isLastNumberDotted() {
