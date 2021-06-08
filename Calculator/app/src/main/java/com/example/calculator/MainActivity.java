@@ -27,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null && savedInstanceState.containsKey(CALC_KEY)) {
             calculator = savedInstanceState.getParcelable(CALC_KEY);
             updateState();
-        }
-        else {
+        } else {
             calculator = new Calculator(getApplicationContext());
         }
         setButtonsListeners();
@@ -126,9 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 Double result = calculator.getResult();
                 textView.setText(String.format("%s%s", textView.getText(), result.toString()));
                 calculator.setTextField(new StringBuilder(textView.getText()));
-            }
-            catch (ArithmeticException e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.divisionByZero), Toast.LENGTH_SHORT).show();
+            } catch (ArithmeticException e) {
+                Toast.makeText(getApplicationContext(), getString(R.string.division_by_zero), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -144,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.text_view);
         StringBuilder string = new StringBuilder(textView.getText());
         if (string.length() > 0) {
-            string.deleteCharAt(string.length()-1);
+            string.deleteCharAt(string.length() - 1);
         }
         textView.setText(string.toString());
         calculator.setTextField(string);
@@ -161,13 +159,13 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(String.format("%s%s", textView.getText(), button.getText().toString()));
         calculator.setTextField(new StringBuilder(textView.getText()));
     }
+
     private void showNumber(Double digit) {
         TextView textView = findViewById(R.id.text_view);
 
         if (calculator.isLastSymbolNumber()) {
             Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             textView.setText(String.format("%s%s", textView.getText(), digit.toString()));
             calculator.setTextField(new StringBuilder(textView.getText()));
         }
@@ -180,22 +178,19 @@ public class MainActivity extends AppCompatActivity {
 
         //ставим сохраненную тему
         SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-        boolean toggle_default = sharedPref.getBoolean(TOGGLE_THEME_KEY, false);
-        toggleTheme.setChecked(toggle_default);
-        setThemeByToggleState(toggle_default);
+        boolean toggleDefault = sharedPref.getBoolean(TOGGLE_THEME_KEY, false);
+        toggleTheme.setChecked(toggleDefault);
+        setThemeByToggleState(toggleDefault);
     }
 
-    private void setThemeByToggleState(boolean toggle_state) {
-        if (toggle_state) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+    private void setThemeByToggleState(boolean toggleState) {
+        AppCompatDelegate.setDefaultNightMode(toggleState ?
+                AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+
         //сохраняем состояние переключателя темы
         SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(TOGGLE_THEME_KEY, toggle_state);
+        editor.putBoolean(TOGGLE_THEME_KEY, toggleState);
         editor.apply();
     }
 

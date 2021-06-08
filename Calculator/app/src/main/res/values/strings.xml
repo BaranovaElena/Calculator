@@ -24,7 +24,7 @@
     <string name="result" translatable="false">=</string>
 
     <string name="error">Error</string>
-    <string name="divisionByZero">Error: Division by 0</string>
+    <string name="division_by_zero">Error: Division by 0</string>
     <string name="toggle_day">Turn on dark theme</string>
     <string name="toggle_night">Turn on light theme</string>
 </resources>
