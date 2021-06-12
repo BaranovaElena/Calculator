@@ -3,7 +3,7 @@
     <style name="style_button_digit">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">@dimen/text_size_button</item>
         <item name="cornerRadius">@dimen/corner_radius</item>
         <item name="strokeColor">@color/button_border</item>
@@ -32,20 +32,13 @@
         <item name="android:padding">@dimen/padding_edit_text</item>
         <item name="android:gravity">top|end</item>
         <item name="android:textAlignment">gravity</item>
-        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">@dimen/text_size_edit_text</item>
     </style>
     <style name="style_text_view_port" parent="style_text_view_land">
         <item name="android:layout_span">@integer/columns_num</item>
         <item name="android:gravity">bottom|end</item>
         <item name="android:layout_height">match_parent</item>
-    </style>
-
-    <style name="background_image">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="srcCompat">@drawable/background_day</item>
-        <item name="android:scaleType">centerCrop</item>
     </style>
 
     <style name="toggle_night_day_land">

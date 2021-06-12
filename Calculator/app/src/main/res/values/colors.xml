@@ -11,5 +11,5 @@
     <color name="button_action_back">#9903A9F4</color>
     <color name="button_digit_back">#3203A9F4</color>
     <color name="button_border">#BFBFBF</color>
-    <color name="textColor">@color/black</color>
+    <color name="text_color">@color/black</color>
 </resources>

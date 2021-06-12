@@ -3,5 +3,5 @@
     <color name="button_action_back">#99000B51</color>
     <color name="button_digit_back">#32000B51</color>
     <color name="button_border">#2C2C2C</color>
-    <color name="textColor">@color/white</color>
+    <color name="text_color">@color/white</color>
 </resources>

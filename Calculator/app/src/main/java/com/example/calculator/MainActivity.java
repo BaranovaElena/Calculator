@@ -21,17 +21,19 @@ public class MainActivity extends AppCompatActivity implements ThemeConstants {
 
     private Calculator calculator;
     private boolean nightTheme;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textView = findViewById(R.id.text_view);
+
         if (savedInstanceState != null && savedInstanceState.containsKey(CALC_KEY)) {
             calculator = savedInstanceState.getParcelable(CALC_KEY);
             updateState();
-        }
-        else {
+        } else {
             calculator = new Calculator(getApplicationContext());
         }
         setButtonsListeners();
@@ -77,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements ThemeConstants {
     }
 
     private void updateState() {
-        TextView textView = findViewById(R.id.text_view);
         textView.setText(calculator.getTextField());
     }
 
@@ -165,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements ThemeConstants {
     }
 
     private void showResult() {
-        TextView textView = findViewById(R.id.text_view);
         if (!textView.getText().equals("")) {
             if (!calculator.isLastSymbolEqualSign()) {
                 showSymbol(findViewById(R.id.button_result));
@@ -174,9 +174,8 @@ public class MainActivity extends AppCompatActivity implements ThemeConstants {
                 Double result = calculator.getResult();
                 textView.setText(String.format("%s%s", textView.getText(), result.toString()));
                 calculator.setTextField(new StringBuilder(textView.getText()));
-            }
-            catch (ArithmeticException e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.divisionByZero), Toast.LENGTH_SHORT).show();
+            } catch (ArithmeticException e) {
+                Toast.makeText(getApplicationContext(), getString(R.string.division_by_zero), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -184,38 +183,32 @@ public class MainActivity extends AppCompatActivity implements ThemeConstants {
     private void showPercentFromLastNumber() {
         calculator.getPercentFromLastNumber();
 
-        TextView textView = findViewById(R.id.text_view);
         textView.setText(calculator.getTextField());
     }
 
     private void clearLastSymbol() {
-        TextView textView = findViewById(R.id.text_view);
-        StringBuilder string = new StringBuilder(textView.getText());
+        String string = textView.getText().toString();
         if (string.length() > 0) {
-            string.deleteCharAt(string.length()-1);
+            string = string.substring(0,string.length()-1);
         }
-        textView.setText(string.toString());
-        calculator.setTextField(string);
+        textView.setText(string);
+        calculator.setTextField(new StringBuilder(string));
     }
 
     private void clearEditText() {
-        TextView textView = findViewById(R.id.text_view);
         textView.setText("");
         calculator.setTextField(new StringBuilder());
     }
 
     private void showSymbol(Button button) {
-        TextView textView = findViewById(R.id.text_view);
         textView.setText(String.format("%s%s", textView.getText(), button.getText().toString()));
         calculator.setTextField(new StringBuilder(textView.getText()));
     }
-    private void showNumber(Double digit) {
-        TextView textView = findViewById(R.id.text_view);
 
+    private void showNumber(Double digit) {
         if (calculator.isLastSymbolNumber()) {
             Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             textView.setText(String.format("%s%s", textView.getText(), digit.toString()));
             calculator.setTextField(new StringBuilder(textView.getText()));
         }
