@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements ThemeConstants {
 
     private Calculator calculator;
     private boolean nightTheme;
-    TextView textView;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
