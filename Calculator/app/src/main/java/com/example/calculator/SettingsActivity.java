@@ -6,7 +6,7 @@ import androidx.appcompat.widget.AppCompatToggleButton;
 import android.content.Intent;
 import android.os.Bundle;
 
-public class SettingsActivity extends AppCompatActivity implements Constants{
+public class SettingsActivity extends AppCompatActivity implements ThemeConstants {
     private AppCompatToggleButton toggleTheme;
 
     @Override
@@ -22,7 +22,7 @@ public class SettingsActivity extends AppCompatActivity implements Constants{
     private void closeActivity() {
         //закрываем с передачей новой темы
         Intent intentResult = new Intent();
-        intentResult.putExtra(NEW_THEME, toggleTheme.isChecked());
+        intentResult.putExtra(NEW_THEME_EXTRA_KEY, toggleTheme.isChecked());
         setResult(RESULT_OK, intentResult);
 
         finish();
@@ -33,7 +33,12 @@ public class SettingsActivity extends AppCompatActivity implements Constants{
         super.onStart();
 
         //значение текущей темы получаем при открытии от main activity
-        boolean nightTheme = getIntent().getExtras().getBoolean(THEME_KEY);
+        boolean nightTheme = getIntent().getExtras().getBoolean(CURRENT_THEME_EXTRA_KEY);
         toggleTheme.setChecked(nightTheme);
     }
+}
+
+interface ThemeConstants {
+    String CURRENT_THEME_EXTRA_KEY = "CURRENT_THEME_EXTRA_KEY";
+    String NEW_THEME_EXTRA_KEY = "NEW_THEME_EXTRA_KEY";
 }

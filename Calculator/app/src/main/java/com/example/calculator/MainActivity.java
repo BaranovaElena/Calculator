@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements Constants{
+public class MainActivity extends AppCompatActivity implements ThemeConstants {
     private final Double PI = 3.1415;
     public final String CALC_KEY = "calculator_key";
     private final String SHARED_PREF_KEY = "main_activity";
@@ -51,15 +52,12 @@ public class MainActivity extends AppCompatActivity implements Constants{
         }
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode != SETTINGS_REQUEST_CODE || data == null) {
-            super.onActivityResult(requestCode, resultCode, data);
-            return;
-        }
         if (resultCode == RESULT_OK){
             //обрабатываем полученную от настроек тему
-            nightTheme = data.getBooleanExtra(NEW_THEME,false);
+            nightTheme = data.getBooleanExtra(NEW_THEME_EXTRA_KEY,false);
             setAndSaveTheme();
         }
     }
@@ -148,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements Constants{
         findViewById(R.id.button_settings).setOnClickListener(v -> {
             //открываем окно настроек, передавая текущаю тему
             Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
-            settings.putExtra(THEME_KEY, nightTheme);
+            settings.putExtra(CURRENT_THEME_EXTRA_KEY, nightTheme);
             startActivityForResult(settings, SETTINGS_REQUEST_CODE);
         });
     }
