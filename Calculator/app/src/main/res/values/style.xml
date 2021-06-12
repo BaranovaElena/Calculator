@@ -1,17 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="style_button_digit">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">@dimen/text_size_button</item>
-        <item name="android:background">@drawable/button_digit</item>
+        <item name="cornerRadius">@dimen/corner_radius</item>
+        <item name="strokeColor">@color/button_border</item>
+        <item name="strokeWidth">@dimen/stroke_width</item>
+        <item name="android:backgroundTint">@color/button_digit_back</item>
         <item name="android:layout_margin">@dimen/margin_button</item>
         <item name="android:clickable">true</item>
     </style>
-    <style name="style_button_action">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/text_size_button</item>
-        <item name="android:background">@drawable/button_action</item>
-        <item name="android:layout_margin">@dimen/margin_button</item>
-        <item name="android:clickable">true</item>
+    <style name="style_button_action" parent="style_button_digit">
+        <item name="android:backgroundTint">@color/button_action_back</item>
+    </style>
+
+    <style name="style_table_row_calculator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">@integer/table_rows_weight</item>
+    </style>
+    <style name="style_table_row_text_view_port" parent="style_table_row_calculator">
+        <item name="android:layout_weight">@integer/text_view_weight_port</item>
+    </style>
+
+    <style name="style_text_view_land">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">@integer/text_toggle_weight_land</item>
+        <item name="android:padding">@dimen/padding_edit_text</item>
+        <item name="android:gravity">top|end</item>
+        <item name="android:textAlignment">gravity</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/text_size_edit_text</item>
+    </style>
+    <style name="style_text_view_port" parent="style_text_view_land">
+        <item name="android:layout_span">@integer/columns_num</item>
+        <item name="android:gravity">bottom|end</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="toggle_night_day_land">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textOff">@string/toggle_day</item>
+        <item name="android:textOn">@string/toggle_night</item>
+        <item name="android:background">@color/button_action_back</item>
+    </style>
+    <style name="toggle_night_day_port" parent="toggle_night_day_land">
+        <item name="android:layout_span">@integer/columns_num</item>
     </style>
 </resources>
