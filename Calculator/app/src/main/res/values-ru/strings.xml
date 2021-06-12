@@ -4,4 +4,6 @@
     <string name="division_by_zero">Ошибка деления на 0</string>
     <string name="toggle_day">Включить темную тему</string>
     <string name="toggle_night">Включить светлую тему</string>
+    <string name="settings">Настройки</string>
+    <string name="apply">Применить</string>
 </resources>

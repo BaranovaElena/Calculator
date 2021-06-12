@@ -51,5 +51,24 @@
     </style>
     <style name="toggle_night_day_port" parent="toggle_night_day_land">
         <item name="android:layout_span">@integer/columns_num</item>
+        <item name="android:layout_gravity">top</item>
+    </style>
+
+    <style name="style_button_settings_land">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/text_size_button_settings</item>
+        <item name="android:text">@string/settings</item>
+        <item name="android:backgroundTint">@color/button_digit_back</item>
+    </style>
+    <style name="style_button_settings_port" parent="style_button_settings_land">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_span">@integer/columns_num</item>
+    </style>
+
+    <style name="style_button_close_settings" parent="style_button_settings_land">
+        <item name="android:text">@string/apply</item>
+        <item name="android:layout_gravity">bottom</item>
     </style>
 </resources>
