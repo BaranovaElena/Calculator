@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_size_button">25sp</dimen>
-    <dimen name="text_size_edit_text">50sp</dimen>
+    <dimen name="text_size_edit_text">40sp</dimen>
     <dimen name="margin_button">10dp</dimen>
     <dimen name="padding_edit_text">5dp</dimen>
 </resources>

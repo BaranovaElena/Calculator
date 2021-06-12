@@ -25,12 +25,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="7">
             <TextView
+                android:id="@+id/text_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="@dimen/padding_edit_text"
                 android:gravity="bottom|end"
                 android:layout_span="4"
-                android:text="111"
                 android:textAlignment="gravity"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_edit_text" />
@@ -46,28 +46,28 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_action"
-                android:text="@string/button_clear" />
+                android:text="@string/clear" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_undo"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_action"
-                android:text="@string/button_undo" />
+                android:text="@string/undo" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_percent"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_action"
-                android:text="@string/button_percent" />
+                android:text="@string/percent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_divide"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_action"
-                android:text="@string/button_divide" />
+                android:text="@string/divide" />
         </TableRow>
 
         <TableRow
@@ -80,28 +80,28 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_digit"
-                android:text="@string/button_1" />
+                android:text="@string/_1" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_digit"
-                android:text="@string/button_2" />
+                android:text="@string/_2" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_digit"
-                android:text="@string/button_3" />
+                android:text="@string/_3" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_multiply"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_action"
-                android:text="@string/button_multiply" />
+                android:text="@string/multiply" />
         </TableRow>
 
         <TableRow
@@ -114,28 +114,28 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_digit"
-                android:text="@string/button_4" />
+                android:text="@string/_4" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_digit"
-                android:text="@string/button_5" />
+                android:text="@string/_5" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_digit"
-                android:text="@string/button_6" />
+                android:text="@string/_6" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_minus"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_action"
-                android:text="@string/button_minus" />
+                android:text="@string/minus" />
         </TableRow>
 
         <TableRow
@@ -148,28 +148,28 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_digit"
-                android:text="@string/button_7" />
+                android:text="@string/_7" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_digit"
-                android:text="@string/button_8" />
+                android:text="@string/_8" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_9"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_digit"
-                android:text="@string/button_9" />
+                android:text="@string/_9" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_plus"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_action"
-                android:text="@string/button_plus" />
+                android:text="@string/plus" />
         </TableRow>
 
         <TableRow
@@ -182,28 +182,28 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_digit"
-                android:text="@string/button_pi" />
+                android:text="@string/pi" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_digit"
-                android:text="@string/button_0" />
+                android:text="@string/_0" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_dot"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_digit"
-                android:text="@string/button_dot" />
+                android:text="@string/dot" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_result"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/style_button_action"
-                android:text="@string/button_result" />
+                android:text="@string/result" />
         </TableRow>
 
     </TableLayout>
